@@ -1,0 +1,50 @@
+<!-- components/loading/loading.html -->
+<div class="loading-container" [class.hidden]="!isLoading">
+  
+  <div class="loading-overlay"></div>
+  
+  <!-- Cambiar [class]="type" por [class]="loadingType" -->
+  <div class="loading-content" [class]="loadingType">
+    
+    <!-- Spinner clásico -->
+    <!-- Cambiar *ngIf="type === 'spinner'" por *ngIf="loadingType === 'spinner'" -->
+    <div *ngIf="loadingType === 'spinner'" class="spinner-animation">
+      <div class="spinner"></div>
+      <div class="loading-text">
+        <p class="message">{{ message }}</p>
+        <p class="sub-message" *ngIf="subMessage">{{ subMessage }}</p>
+      </div>
+    </div>
+
+    <!-- Dots bouncing -->
+    <!-- Cambiar *ngIf="type === 'dots'" por *ngIf="loadingType === 'dots'" -->
+    <div *ngIf="loadingType === 'dots'" class="dots-animation">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="loading-text">
+        <p class="message">{{ message }}</p>
+      </div>
+    </div>
+
+    <!-- Skeleton loader -->
+    <!-- Cambiar *ngIf="type === 'skeleton'" por *ngIf="loadingType === 'skeleton'" -->
+    <div *ngIf="loadingType === 'skeleton'" class="skeleton-animation">
+      <div class="skeleton-line large"></div>
+      <div class="skeleton-line medium"></div>
+      <div class="skeleton-line small"></div>
+      <div class="loading-text">
+        <p class="message">{{ message }}</p>
+      </div>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progress-container" *ngIf="showProgress">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+      <span class="progress-text">{{ progress }}%</span>
+    </div>
+
+  </div>
+</div>

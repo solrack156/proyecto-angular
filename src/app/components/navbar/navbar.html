@@ -1,0 +1,30 @@
+<nav class="navbar">
+    <div class="container">
+        <div class="brand">
+            <a routerLink="/" class="logo">🚀 <span>Mi Portafolio</span></a>
+        </div>
+
+        <button class="burger" (click)="toggle()" aria-label="Toggle navigation">
+            <span [class.open]="isOpen">☰</span>
+        </button>
+
+        <div class="links" [class.open]="isOpen">
+            <!-- Enlaces principales -->
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+            <a routerLink="/about" routerLinkActive="active">Sobre mí</a>
+            <a routerLink="/hobbies" routerLinkActive="active">Hobbies</a>
+            <a routerLink="/skills" routerLinkActive="active">Habilidades</a>
+            <a routerLink="/activities" routerLinkActive="active">Horario</a>
+            <a routerLink="/contact" routerLinkActive="active" class="cta">Contacto</a>
+            
+            <!-- Separador visual (opcional) -->
+            <div class="nav-divider"></div>
+            
+            <!-- Demos de Angular -->
+            <a routerLink="/event-binding" routerLinkActive="active">Event Binding</a>
+            <a routerLink="/property-binding" routerLinkActive="active">Property Binding</a>
+            <a routerLink="/two-way-binding" routerLinkActive="active">Two-Way Binding</a>
+            <a routerLink="/parent-child" routerLinkActive="active">Parent-Child</a> <!-- ← NUEVO -->
+        </div>
+    </div>
+</nav>

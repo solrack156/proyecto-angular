@@ -1,0 +1,68 @@
+<section class="about">
+	<div class="container">
+		<div class="profile">
+			<div class="avatar">
+				<img [src]="profilePhoto" alt="Foto de perfil" onerror="this.src='https://via.placeholder.com/300x300/667eea/ffffff?text=Perfil'">
+			</div>
+			<div class="info">
+				<h2 class="name">{{ fullName }}</h2>
+				<p class="role">{{ title }}</p>
+				<p class="location">📍 {{ location }}</p>
+
+				<p class="bio">
+					Soy un estudiante entusiasta de Ingeniería de Sistemas, apasionado por el desarrollo web y los deportes. Me destaco en natación y programación, y disfruto combinando la disciplina deportiva con el desarrollo de software. Actualmente me especializo en tecnologías web modernas como Angular y TypeScript.
+				</p>
+
+				<div class="quick-links">
+					<a routerLink="/contact" class="btn">Contactar</a>
+					<a href="/assets/CV.pdf" class="btn btn-outline" target="_blank" download>Descargar CV</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- SECCIÓN FACTS CORRECTA -->
+		<div class="facts">
+			<div class="fact">
+				<strong>2+</strong>
+				<span>Años programando</span>
+			</div>
+			<div class="fact">
+				<strong>5+</strong>
+				<span>Proyectos Web</span>
+			</div>
+			<div class="fact">
+				<strong>Deportista</strong>
+				<span>Natación & Cardio</span>
+			</div>
+		</div>
+
+		<!-- SECCIÓN DETALLES FUERA DE FACTS -->
+		<div class="detail-sections">
+			<div class="section">
+				<h3>Trayectoria</h3>
+				<div class="timeline">
+					<div class="timeline-item" *ngFor="let ex of experience">
+						<div class="period">{{ ex.period | periodFormat }}</div> <!-- ✅ Usar el pipe -->
+						<div class="meta">
+							<h4>{{ ex.role }} — <span class="company">{{ ex.company }}</span></h4>
+							<p>{{ ex.details }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<h3>Educación</h3>
+				<div class="education">
+					<div class="edu-item" *ngFor="let ed of education">
+						<div class="period">{{ ed.period | periodFormat }}</div> <!-- ✅ Usar el pipe -->
+						<div class="meta">
+							<h4>{{ ed.degree }}</h4>
+							<p>{{ ed.school }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

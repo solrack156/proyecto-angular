@@ -1,0 +1,620 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-skills',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <section class="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag">Mis Habilidades</span>
+          <h2 class="section-title">Aptitudes & Destrezas</h2>
+          <p class="section-subtitle">Deportes, Gaming y Programación</p>
+        </div>
+
+        <div class="skills-categories">
+          <div class="category-tabs">
+            <button *ngFor="let cat of categories; let i = index"
+                    [class.active]="activeCategory === i"
+                    (click)="activeCategory = i"
+                    class="tab-button">
+              <span class="tab-icon">{{ cat.icon }}</span>
+              <span class="tab-label">{{ cat.name }}</span>
+            </button>
+          </div>
+
+          <div class="skills-content">
+            <div class="skills-grid">
+              <div class="skill-card" *ngFor="let skill of categories[activeCategory].skills; let i = index"
+                   [style.animation-delay.ms]="i * 50">
+                <div class="skill-icon" [style.background]="skill.color">
+                  {{ skill.icon }}
+                </div>
+                <div class="skill-info">
+                  <h4>{{ skill.name }}</h4>
+                  <div class="skill-level">
+                    <div class="level-bar">
+                      <div class="level-fill" [style.width.%]="skill.level"></div>
+                    </div>
+                    <span class="level-text">{{ skill.level }}%</span>
+                  </div>
+                  <p class="skill-description">{{ skill.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="additional-skills">
+          <h3>Otras Competencias</h3>
+          <div class="tags-cloud">
+            <span class="skill-tag" *ngFor="let tag of additionalSkills">{{ tag }}</span>
+          </div>
+        </div>
+
+        <div class="certifications">
+          <h3>🏆 Certificaciones & Logros</h3>
+          <div class="cert-grid">
+            <div class="cert-card" *ngFor="let cert of certifications">
+              <div class="cert-badge">{{ cert.badge }}</div>
+              <h4>{{ cert.title }}</h4>
+              <p class="cert-issuer">{{ cert.issuer }}</p>
+              <p class="cert-date">{{ cert.date }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `,
+  styles: [`
+    .skills {
+      padding: 100px 20px;
+      background: #f9fafb;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin: 15px 0;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: #718096;
+    }
+
+    .skills-categories {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 60px;
+    }
+
+    .category-tabs {
+      display: flex;
+      background: #f7fafc;
+      border-bottom: 2px solid #e2e8f0;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 20px 30px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #718096;
+      position: relative;
+    }
+
+    .tab-button::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .tab-button.active {
+      color: #667eea;
+      background: white;
+    }
+
+    .tab-button.active::after {
+      transform: scaleX(1);
+    }
+
+    .tab-button:hover {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .tab-icon {
+      font-size: 1.5rem;
+    }
+
+    .skills-content {
+      padding: 40px;
+    }
+
+    .skills-grid {
+      display: grid;
+      gap: 25px;
+    }
+
+    .skill-card {
+      display: flex;
+      gap: 20px;
+      padding: 25px;
+      background: #f7fafc;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .skill-card:hover {
+      background: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transform: translateX(10px);
+    }
+
+    .skill-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .skill-info {
+      flex: 1;
+    }
+
+    .skill-info h4 {
+      font-size: 1.2rem;
+      color: #1a202c;
+      margin: 0 0 10px 0;
+    }
+
+    .skill-level {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .level-bar {
+      flex: 1;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .level-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      transition: width 1s ease-out;
+    }
+
+    .level-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #667eea;
+      min-width: 45px;
+    }
+
+    .skill-description {
+      font-size: 0.95rem;
+      color: #718096;
+      margin: 0;
+    }
+
+    .additional-skills {
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      margin-bottom: 60px;
+    }
+
+    .additional-skills h3 {
+      font-size: 2rem;
+      color: #1a202c;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .tags-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .skill-tag {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .certifications {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 50px;
+      border-radius: 20px;
+      color: white;
+    }
+
+    .certifications h3 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .cert-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .cert-card:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-10px);
+    }
+
+    .cert-badge {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+    }
+
+    .cert-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .cert-issuer {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+
+    .cert-date {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .category-tabs {
+        flex-direction: column;
+      }
+
+      .tab-button {
+        padding: 15px 20px;
+      }
+
+      .skills-content {
+        padding: 20px;
+      }
+
+      .skill-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .skill-icon {
+        margin: 0 auto;
+      }
+
+      .additional-skills,
+      .certifications {
+        padding: 30px 20px;
+      }
+    }
+
+    :host-context(.dark-theme) .skills {
+      background: #1a1a2e;
+    }
+
+    :host-context(.dark-theme) .section-title,
+    :host-context(.dark-theme) .additional-skills h3,
+    :host-context(.dark-theme) .skill-info h4 {
+      color: #e4e4e4;
+    }
+
+    :host-context(.dark-theme) .section-subtitle,
+    :host-context(.dark-theme) .skill-description {
+      color: #a0aec0;
+    }
+
+    :host-context(.dark-theme) .skills-categories,
+    :host-context(.dark-theme) .additional-skills {
+      background: #16213e;
+    }
+
+    :host-context(.dark-theme) .category-tabs {
+      background: #0f1624;
+      border-bottom-color: #2d3748;
+    }
+
+    :host-context(.dark-theme) .tab-button {
+      color: #a0aec0;
+    }
+
+    :host-context(.dark-theme) .tab-button.active {
+      background: #16213e;
+      color: #8b9aff;
+    }
+
+    :host-context(.dark-theme) .skill-card {
+      background: #0f1624;
+    }
+
+    :host-context(.dark-theme) .skill-card:hover {
+      background: #16213e;
+    }
+
+    :host-context(.dark-theme) .level-bar {
+      background: #2d3748;
+    }
+  `]
+})
+export class SkillsComponent implements OnInit {
+  activeCategory = 0;
+
+  categories = [
+    {
+      name: 'Frontend',
+      icon: '💻',
+      skills: [
+        {
+          name: 'Angular',
+          icon: '🅰️',
+          level: 90,
+          color: 'linear-gradient(135deg, #dd0031 0%, #c3002f 100%)',
+          description: 'Desarrollo de aplicaciones web complejas con Angular'
+        },
+        {
+          name: 'React',
+          icon: '⚛️',
+          level: 85,
+          color: 'linear-gradient(135deg, #61dafb 0%, #21a1c4 100%)',
+          description: 'Creación de interfaces dinámicas y componentes reutilizables'
+        },
+        {
+          name: 'TypeScript',
+          icon: '📘',
+          level: 88,
+          color: 'linear-gradient(135deg, #3178c6 0%, #235a97 100%)',
+          description: 'Desarrollo con tipado fuerte y mejores prácticas'
+        },
+        {
+          name: 'CSS/SCSS',
+          icon: '🎨',
+          level: 92,
+          color: 'linear-gradient(135deg, #cc6699 0%, #9b4f73 100%)',
+          description: 'Diseño responsive y animaciones avanzadas'
+        }
+      ]
+    },
+    {
+      name: 'Backend',
+      icon: '⚙️',
+      skills: [
+        {
+          name: 'Node.js',
+          icon: '🟢',
+          level: 87,
+          color: 'linear-gradient(135deg, #68a063 0%, #4f7c47 100%)',
+          description: 'Desarrollo de APIs REST y microservicios'
+        },
+        {
+          name: 'Python',
+          icon: '🐍',
+          level: 83,
+          color: 'linear-gradient(135deg, #3776ab 0%, #2d5f8d 100%)',
+          description: 'Scripting, automatización y desarrollo backend'
+        },
+        {
+          name: 'PostgreSQL',
+          icon: '🐘',
+          level: 85,
+          color: 'linear-gradient(135deg, #336791 0%, #25547a 100%)',
+          description: 'Diseño de bases de datos relacionales y optimización'
+        },
+        {
+          name: 'MongoDB',
+          icon: '🍃',
+          level: 80,
+          color: 'linear-gradient(135deg, #4db33d 0%, #3d8b2f 100%)',
+          description: 'Bases de datos NoSQL y modelado de datos flexibles'
+        }
+      ]
+    },
+    {
+      name: 'DevOps',
+      icon: '🚀',
+      skills: [
+        {
+          name: 'Docker',
+          icon: '🐳',
+          level: 82,
+          color: 'linear-gradient(135deg, #2496ed 0%, #1a75bb 100%)',
+          description: 'Containerización de aplicaciones y orquestación'
+        },
+        {
+          name: 'Git',
+          icon: '📦',
+          level: 90,
+          color: 'linear-gradient(135deg, #f05032 0%, #c73b27 100%)',
+          description: 'Control de versiones y flujos de trabajo colaborativos'
+        },
+        {
+          name: 'AWS',
+          icon: '☁️',
+          level: 78,
+          color: 'linear-gradient(135deg, #ff9900 0%, #cc7a00 100%)',
+          description: 'Despliegue y gestión de infraestructura cloud'
+        },
+        {
+          name: 'CI/CD',
+          icon: '♻️',
+          level: 80,
+          color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          description: 'Automatización de despliegues y testing'
+        }
+      ]
+    },
+    {
+      name: 'Tools',
+      icon: '🛠️',
+      skills: [
+        {
+          name: 'VS Code',
+          icon: '💙',
+          level: 95,
+          color: 'linear-gradient(135deg, #007acc 0%, #005a9e 100%)',
+          description: 'Editor principal con configuración personalizada'
+        },
+        {
+          name: 'Figma',
+          icon: '🎭',
+          level: 75,
+          color: 'linear-gradient(135deg, #f24e1e 0%, #c23e18 100%)',
+          description: 'Diseño de interfaces y prototipado'
+        },
+        {
+          name: 'Postman',
+          icon: '📮',
+          level: 88,
+          color: 'linear-gradient(135deg, #ff6c37 0%, #e65528 100%)',
+          description: 'Testing y documentación de APIs'
+        },
+        {
+          name: 'Jira',
+          icon: '📊',
+          level: 80,
+          color: 'linear-gradient(135deg, #0052cc 0%, #0042a3 100%)',
+          description: 'Gestión de proyectos ágiles y seguimiento'
+        }
+      ]
+    }
+  ];
+
+  additionalSkills = [
+    'Yoga', 'Meditación', 'Estiramientos', 'Calistenia', 'Nutrición Deportiva',
+    'Minecraft', 'FIFA', 'Call of Duty', 'Rainbow Six', 'Rocket League',
+    'Git/GitHub', 'APIs', 'UI/UX', 'Testing', 'Cloud Computing'
+  ];
+
+  certifications = [
+    {
+      badge: '�',
+      title: 'Nivel Avanzado Natación',
+      issuer: 'Club de Natación',
+      date: '2023'
+    },
+    {
+      badge: '🎮',
+      title: 'Torneo Regional LOL',
+      issuer: 'ESL Gaming',
+      date: '2024'
+    },
+    {
+      badge: '�',
+      title: 'Media Maratón',
+      issuer: 'Club Atlético',
+      date: '2023'
+    },
+    {
+      badge: '💻',
+      title: 'Full Stack Developer',
+      issuer: 'Tech Institute',
+      date: '2024'
+    }
+  ];
+
+  ngOnInit() {
+    // Animar las barras de progreso al cargar
+    setTimeout(() => {
+      const fills = document.querySelectorAll('.level-fill');
+      fills.forEach((fill: any) => {
+        const width = fill.style.width;
+        fill.style.width = '0%';
+        setTimeout(() => {
+          fill.style.width = width;
+        }, 100);
+      });
+    }, 500);
+  }
+}

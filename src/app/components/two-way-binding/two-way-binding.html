@@ -1,0 +1,96 @@
+<!-- two-way-binding.html -->
+<div class="container">
+  <h2>Two-Way Binding con ngModel</h2>
+  
+  <!-- Todos los campos SIN paréntesis -->
+  <div class="form-group">
+    <label>Nombre:</label>
+    <input 
+      type="text" 
+      [(ngModel)]="userForm.name" 
+      placeholder="Ingresa tu nombre"
+      class="form-input"
+    >
+    <p>Valor: {{ userForm.name }}</p>
+  </div>
+  
+  <div class="form-group">
+    <label>Email:</label>
+    <input 
+      type="email" 
+      [(ngModel)]="userForm.email" 
+      placeholder="correo@ejemplo.com"
+      class="form-input"
+    >
+    <p>Valor: {{ userForm.email }}</p>
+  </div>
+  
+  <div class="form-group">
+    <label>Edad:</label>
+    <input 
+      type="number" 
+      [(ngModel)]="userForm.age" 
+      min="0" 
+      max="120"
+      class="form-input"
+    >
+    <p>Valor: {{ userForm.age }}</p>
+  </div>
+  
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input 
+        type="checkbox" 
+        [(ngModel)]="userForm.subscribe"
+      >
+      Suscribirse al newsletter
+    </label>
+    <p>Suscrito: {{ userForm.subscribe ? 'Sí' : 'No' }}</p>
+  </div>
+  
+  <div class="form-group">
+    <label>País:</label>
+    <select 
+      [(ngModel)]="userForm.country"
+      class="form-input"
+    >
+      <option value="">Selecciona un país</option>
+      <option *ngFor="let country of countries" [value]="country">
+        {{ country }}
+      </option>
+    </select>
+    <p>País seleccionado: {{ userForm.country }}</p>
+  </div>
+  
+  <div class="form-group">
+    <label>Comentario:</label>
+    <textarea 
+      [(ngModel)]="comment" 
+      rows="3" 
+      placeholder="Escribe tu comentario..."
+      class="form-input"
+    ></textarea>
+    <p>Comentario: {{ comment }}</p>
+  </div>
+  
+  <div class="summary">
+    <h4>Resumen de Datos:</h4>
+    <pre>{{ getUserSummary() }}</pre>
+  </div>
+  
+  <div class="actions">
+    <button 
+      class="btn btn-outline"
+      (click)="resetForm()"
+    >
+      Resetear Formulario
+    </button>
+    <button 
+      class="btn btn-primary"
+      (click)="submitForm()" 
+      [disabled]="!isFormValid()"
+    >
+      Enviar Datos
+    </button>
+  </div>
+</div>

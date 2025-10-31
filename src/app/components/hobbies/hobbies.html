@@ -1,0 +1,18 @@
+<section class="hobbies">
+	<div class="container">
+		<div class="section-header">
+			<span class="tag">Pasiones</span>
+			<h2 class="section-title">Hobbies</h2>
+			<p class="section-subtitle">Cosas que me inspiran fuera del trabajo</p>
+		</div>
+
+		<div class="hobbies-grid">
+			<a [href]="h.link" target="_blank" rel="noopener noreferrer" class="hobby-card" *ngFor="let h of hobbies">
+				<div class="icon">{{ h.icon }}</div>
+				<h3>{{ h.title }}</h3>
+				<p>{{ h.desc }}</p>
+				<div class="link-hint">Click para visitar →</div>
+			</a>
+		</div>
+	</div>
+</section>
